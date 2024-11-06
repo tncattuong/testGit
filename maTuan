@@ -1,0 +1,57 @@
+#include <iostream>
+#include <iomanip> 
+#define MAX 8
+using namespace std;
+
+// Bài toán con mã đi tuần
+int a[MAX][MAX] = { 0 };
+int dx[8] = { -2, -2, -1, -1, 1, 1, 2, 2 };
+int dy[8] = { -1, 1, -2, 2, -2, 2, -1, 1 };
+int n;
+int dem = 0;
+
+void xuat()
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+            cout << setw(2) << a[i][j] << " "; // Su dung setw de dinh dang do rong cua cot
+        cout << endl;
+    }
+    cout << endl;
+}
+
+//====================================================================================//
+void move(int x, int y)
+{
+    ++dem;
+    a[x][y] = dem;
+    for (int i = 0; i < 8; i++)
+    {
+        if (dem == n * n)
+        {
+            cout << "Cac buoc da di: \n";
+            xuat();
+            exit(0);
+        }
+        int u = x + dx[i];
+        int v = y + dy[i];
+        if (u >= 0 && u < n && v >= 0 && v < n && a[u][v] == 0)
+            move(u, v);
+    }
+    --dem;
+    a[x][y] = 0;
+}
+//====================================================================================//
+
+int main()
+{
+    cout << "Nhap kich thuoc n: ";
+    cin >> n;
+    int a, b;
+    cout << "Nhap vi tri ban dau: ";
+    cin >> a >> b;
+    cout << "(" << a << "," << b << ")" << endl;
+    move(a, b);
+    cout << "Khong tim duoc duong di!";
+}
